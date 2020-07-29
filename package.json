@@ -1,0 +1,8 @@
+{
+  "name": "tp-m2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Joao Victor Ramires Guimaraes Brito <joaoramires.engsoft@gmail.com>",
+  "license": "MIT",
+  "type": "module"
+}
