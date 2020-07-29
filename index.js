@@ -7,10 +7,8 @@ const rl = readline.createInterface({
 });
 
 async function statesFullInfo() {
-  let cidades = await fs.readFile('./datasets/cidades.json');
-  cidades = JSON.parse(cidades);
-  let estados = await fs.readFile('./datasets/estados.json');
-  estados = JSON.parse(estados);
+  const cidades = JSON.parse(await fs.readFile('./datasets/cidades.json'));
+  const estados = JSON.parse(await fs.readFile('./datasets/estados.json'));
 
   const cidadesDosEstados = [];
 
@@ -45,8 +43,7 @@ async function writeJsonFiles() {
 // Questão 2
 async function countCities(uf) {
   try {
-    const data = await fs.readFile(`./datasets/${uf}.json`);
-    const cidades = JSON.parse(data);
+    const cidades = JSON.parse(await fs.readFile(`./datasets/${uf}.json`));
     return cidades.length;
   } catch (error) {
     return error;
@@ -62,8 +59,24 @@ function askForUf() {
     }
     else {
       const promise = await countCities(uf.toUpperCase());
+      console.clear();
       console.log(`${uf.toUpperCase()} possui ${promise} cidades.`);
-      askForUf();
+      try {
+        const cidades = await countCities(uf.toUpperCase());
+        console.clear();
+        console.log(`${uf.toUpperCase()} possui ${cidades} cidades.`);
+        setTimeout(function () {
+          console.clear();
+          askForUf();
+        }, 3500);
+      } catch (error) {
+        console.clear();
+        console.log(error);
+        setTimeout(function () {
+          console.clear();
+          askForUf();
+        }, 4000);
+      }
     }
   });
 }
@@ -76,7 +89,7 @@ async function topFiveStatesWithMostCities() {
   for (let i = 0; i < cidadesDosEstados.length; i++)
     numCidadesPorEstado.push([cidadesDosEstados[i][1], cidadesDosEstados[i][2].length]);
 
-  numCidadesPorEstado = await numCidadesPorEstado.sort((a, b) => b[1] - a[1]);
+  numCidadesPorEstado = numCidadesPorEstado.sort((a, b) => b[1] - a[1]);
 
   console.log('Top 5 Estados com mais municípios\n');
   for (let i = 0; i < 5; i++)
@@ -92,7 +105,7 @@ async function topFiveStatesWithLessCities() {
   for (let i = 0; i < cidadesDosEstados.length; i++)
     numCidadesPorEstado.push([cidadesDosEstados[i][1], cidadesDosEstados[i][2].length]);
 
-  numCidadesPorEstado = await numCidadesPorEstado.sort((a, b) => a[1] - b[1]);
+  numCidadesPorEstado = numCidadesPorEstado.sort((a, b) => a[1] - b[1]);
 
   console.log('Top 5 Estados com menos municípios\n');
   for (let i = 0; i < 5; i++)
@@ -110,8 +123,7 @@ async function biggestCityNameLengthPerState() {
     }
     else {
       try {
-        let cities = await fs.readFile(`./datasets/${uf.toUpperCase()}.json`);
-        cities = JSON.parse(cities);
+        let cities = JSON.parse(await fs.readFile(`./datasets/${uf.toUpperCase()}.json`));
         cities = cities.sort((a, b) => b.length - a.length);
 
         console.clear();
@@ -141,8 +153,7 @@ async function smallestCityNameLengthPerState() {
     }
     else {
       try {
-        let cities = await fs.readFile(`./datasets/${uf.toUpperCase()}.json`);
-        cities = JSON.parse(cities);
+        let cities = JSON.parse(await fs.readFile(`./datasets/${uf.toUpperCase()}.json`));
         cities = cities.sort((a, b) => a.length - b.length);
 
         console.clear();
