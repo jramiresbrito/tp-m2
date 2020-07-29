@@ -1,0 +1,6 @@
+{
+  "ignore": [
+    "datasets/*",
+    "README"
+  ]
+}

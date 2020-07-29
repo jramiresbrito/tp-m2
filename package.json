@@ -4,5 +4,9 @@
   "main": "index.js",
   "author": "Joao Victor Ramires Guimaraes Brito <joaoramires.engsoft@gmail.com>",
   "license": "MIT",
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js",
+    "debug": "nodemon --inspect index.js"
+  }
 }
